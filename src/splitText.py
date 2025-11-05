@@ -10,8 +10,8 @@ def split_text_by_sentences(source_text: str, sentences_per_chunk: int, overlap:
     if overlap < 0 or overlap >= sentences_per_chunk -1:
         raise ValueError("overlap参数必须大于等于0,且小于sentences_per_chunk -1") # 因为overlap是两个chunk的重叠部分,必须大于0，防止丢数据，所以不能大于等于sentences_per_chunk -1
     
-    # 先简单化，用正则表达式分割句子
-    sentences = re.split(r'(?<=[. ! ? ])\s+', source_text) # 按段落分割
+    # 先简单化，用正则表达式分割句子（同时支持中英文标点）
+    sentences = re.split(r'(?<=[。！？；.!?])\s*', source_text) # 按句号/感叹号/问号/分号分割
     sentences = [sentence.strip() for sentence in sentences if sentence.strip() != ''] # 列表推导式，去除每个句子首位的空格，如果剩下的不是空格，保留句子
 
     if not sentences:
